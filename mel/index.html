@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puzzle do Alanzoka 🎮</title>
+
+<style>
+  :root{
+    --bg:#fff0f6;
+    --accent:#ff6fa3;
+    --sunflower:#ffd54f;
+    --text:#2d2d2d;
+    font-family:'Comic Neue', cursive, system-ui;
+  }
+  body{
+    margin:0;
+    background:linear-gradient(180deg,#fff0f6,#fff7ea);
+    color:var(--text);
+    overflow-x:hidden;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
+
+  header{
+    text-align:center;
+    padding:30px 20px;
+    font-family:'Patrick Hand', cursive;
+    position:relative;
+    z-index:10;
+  }
+  header h1{margin:0;font-size:32px;color:#e6397b;}
+  header p{margin:6px 0 0;font-size:18px;}
+
+  .container{
+    max-width:500px;
+    width:90%;
+    z-index:10;
+  }
+
+  .card{
+    background:white;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 6px 24px rgba(0,0,0,0.1);
+    text-align:center;
+    position:relative;
+    z-index:10;
+  }
+  .card p{font-size:18px;margin:10px 0;}
+
+  input{
+    width:100%;
+    padding:12px;
+    border:2px solid var(--accent);
+    border-radius:10px;
+    font-size:16px;
+    margin-top:15px;
+  }
+  button{
+    margin-top:15px;
+    background:var(--accent);
+    border:none;
+    padding:10px 20px;
+    color:white;
+    font-size:16px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+  }
+  button:hover{background:#ff4081}
+  .error{color:red;font-size:14px;display:none;margin-top:10px}
+
+  /* --- flores flutuantes personalizadas --- */
+  .flower{
+    position:fixed;
+    width:50px;
+    height:50px;
+    pointer-events:none;
+    animation: float 12s linear infinite;
+    opacity:0.8;
+    z-index: 5; /* Abaixo do conteúdo mas acima do fundo */
+    object-fit: contain;
+  }
+  @keyframes float{
+    0%{transform:translateY(-10%) rotate(0deg);}
+    100%{transform:translateY(120vh) rotate(360deg);}
+  }
+</style>
+</head>
+<body>
+
+
+
+<header>
+  <!-- flores animadas PERSONALIZADAS -->
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:5%;animation-delay:0s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:15%;animation-delay:2s">
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:25%;animation-delay:4s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:35%;animation-delay:1s">
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:45%;animation-delay:3s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:55%;animation-delay:5s">
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:65%;animation-delay:2.5s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:75%;animation-delay:0.5s">
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:85%;animation-delay:3.5s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:95%;animation-delay:1.5s">
+  <h1>🌻 Puzzle do Alanzoka 🌹</h1>
+  <p>Resolva para entrar no nosso cantinho 💖</p>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2>Escreva a frase corretamente 🎮</h2>
+    <p><em>"meu joelho da coçando"</em></p>
+    <input type="text" id="answer" placeholder="Digite a frase certa">
+    <button onclick="checkAnswer()">Verificar</button>
+    <div class="error" id="error">❌ Resposta incorreta, tente de novo!</div>
+  </div>
+</div>
+
+<script>
+  function checkAnswer(){
+    const resposta = document.getElementById('answer').value.trim().toLowerCase();
+    const correta = "meus cocelho ta joando";
+    if(resposta === correta){
+      window.location.href = "love.html";
+    }else{
+      document.getElementById('error').style.display = "block";
+    }
+  }
+</script>
+</body>
+</html>
