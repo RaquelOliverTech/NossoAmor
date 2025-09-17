@@ -1,488 +1,137 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>🌻💖 1 Mês — Nosso Cantinho</title>
-  <style>
-    :root{
-      --bg:#fbeff5;
-      --accent:#ff6b9a;
-      --sunflower:#ffd54f;
-      --text:#2d2d2d;
-      --muted:#6c6c6c;
-      font-family: 'Comic Neue', cursive, system-ui;
-    }
-    body{
-      margin:0;
-      background:linear-gradient(180deg,var(--bg),#fff5fa);
-      color:var(--text);
-      overflow-x:hidden;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Puzzle do Alanzoka 🎮</title>
 
-    header{
-      text-align:center;
-      padding:30px 20px;
-      background:linear-gradient(90deg, var(--sunflower), var(--accent));
-      color:white;
-      font-family: 'Patrick Hand', cursive;
-      position:relative;
-      overflow: hidden;
-      z-index: 1;
-    }
-    header h1{margin:0;font-size:32px;}
-    header p{margin:6px 0 0;font-size:18px;}
+<style>
+  :root{
+    --bg:#fff0f6;
+    --accent:#ff6fa3;
+    --sunflower:#ffd54f;
+    --text:#2d2d2d;
+    font-family:'Comic Neue', cursive, system-ui;
+  }
+  body{
+    margin:0;
+    background:linear-gradient(180deg,#fff0f6,#fff7ea);
+    color:var(--text);
+    overflow-x:hidden;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+  }
 
-    /* flores flutuantes personalizadas */
-    .flower{
-    position:absolute;
+  header{
+    text-align:center;
+    padding:30px 20px;
+    font-family:'Patrick Hand', cursive;
+    position:relative;
+    z-index:10;
+  }
+  header h1{margin:0;font-size:32px;color:#e6397b;}
+  header p{margin:6px 0 0;font-size:18px;}
+
+  .container{
+    max-width:500px;
+    width:90%;
+    z-index:10;
+  }
+
+  .card{
+    background:white;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 6px 24px rgba(0,0,0,0.1);
+    text-align:center;
+    position:relative;
+    z-index:10;
+  }
+  .card p{font-size:18px;margin:10px 0;}
+
+  input{
+    width:100%;
+    padding:12px;
+    border:2px solid var(--accent);
+    border-radius:10px;
+    font-size:16px;
+    margin-top:15px;
+  }
+  button{
+    margin-top:15px;
+    background:var(--accent);
+    border:none;
+    padding:10px 20px;
+    color:white;
+    font-size:16px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+  }
+  button:hover{background:#ff4081}
+  .error{color:red;font-size:14px;display:none;margin-top:10px}
+
+  /* --- flores flutuantes personalizadas --- */
+  .flower{
+    position:fixed;
     width:50px;
     height:50px;
     pointer-events:none;
     animation: float 12s linear infinite;
     opacity:0.8;
-    z-index: 10; /* Aumentei o z-index para ficar na frente */
+    z-index: 5; /* Abaixo do conteúdo mas acima do fundo */
     object-fit: contain;
   }
-    @keyframes float{
-      0%{transform:translateY(-10%) rotate(0deg);}
-      100%{transform:translateY(120vh) rotate(360deg);}
-    }
-
-    .container{max-width:960px;margin:40px auto;padding:20px}
-
-    .card{
-      background:white;
-      padding:20px;
-      border-radius:16px;
-      box-shadow:0 6px 24px rgba(0,0,0,0.1);
-      margin-bottom:20px;
-    }
-
-    /* Estilos para o contador de amor */
-    .love-counter {
-      text-align: center;
-      margin-bottom: 20px;
-      padding: 15px;
-      background: linear-gradient(135deg, #fff5f8, #ffeef5);
-      border-radius: 12px;
-      border: 2px dashed #ff6b9a;
-    }
-    
-    .love-counter h3 {
-      margin: 0 0 15px 0;
-      color: #ff6b9a;
-      font-family: 'Patrick Hand', cursive;
-      font-size: 22px;
-    }
-    
-    .counter-container {
-      display: flex;
-      justify-content: space-around;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    
-    .time-unit {
-      background: white;
-      padding: 10px;
-      border-radius: 10px;
-      min-width: 70px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    
-    .time-unit span {
-      display: block;
-      font-size: 24px;
-      font-weight: bold;
-      color: #ff6b9a;
-    }
-    
-    .time-unit small {
-      color: #6c6c6c;
-      font-size: 14px;
-    }
-
-    /* slideshow de fotos - MODIFICADO */
-    .slideshow{
-      position:relative;
-      overflow:hidden;
-      border-radius:12px;
-      height:0;
-      padding-bottom: 56.25%; /* Proporção 16:9 (ajuste conforme necessidade) */
-    }
-    .slides{
-      position:absolute;
-      top:0;
-      left:0;
-      display:flex;
-      width:100%;
-      height:100%;
-      transition:transform .6s ease;
-    }
-    .slide{
-      min-width:100%;
-      background-size:contain; /* Alterado de cover para contain */
-      background-repeat: no-repeat;
-      background-position:center;
-      background-color: #f8f8f8; /* Cor de fundo caso a imagem não preencha totalmente */
-    }
-    
-    /* Setas laterais */
-    .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      cursor: pointer;
-      z-index: 10;
-      transition: all 0.3s ease;
-      border: none;
-      color: var(--accent);
-    }
-    .arrow:hover {
-      background: rgba(255, 255,255, 0.9);
-      transform: translateY(-50%) scale(1.1);
-    }
-    .arrow.prev {
-      left: 15px;
-    }
-    .arrow.next {
-      right: 15px;
-    }
-    
-    /* Indicadores (bolinhas) */
-    .indicators {
-      position: absolute;
-      bottom: 15px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      z-index: 10;
-    }
-    .indicator {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.5);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: none;
-    }
-    .indicator.active {
-      background: rgba(255, 255, 255, 0.9);
-      transform: scale(1.2);
-    }
-
-    .message{font-size:18px;line-height:1.5;font-family:'Patrick Hand', cursive;}
-
-    .gallery{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap:15px;
-      margin-top:12px;
-    }
-    .gallery video{
-      width:100%;
-      height:200px;
-      object-fit:cover;
-      border-radius:12px;
-      cursor:pointer;
-      transition:.3s;
-    }
-    .gallery video:hover{ transform:scale(1.03); }
-
-    /* Responsividade para telas pequenas */
-    @media (max-width: 768px){
-      .slideshow {
-        padding-bottom: 75%; /* Proporção mais quadrada em dispositivos móveis */
-      }
-      .arrow {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-      }
-      .flower {
-        width: 40px;
-        height: 40px;
-      }
-      .counter-container {
-        gap: 5px;
-      }
-      .time-unit {
-        min-width: 60px;
-        padding: 8px;
-      }
-      .time-unit span {
-        font-size: 20px;
-      }
-    }
-    
-    @media (max-width: 480px){
-      .gallery{ grid-template-columns: 1fr; }
-      .gallery video{ height:180px; }
-      header h1 { font-size: 26px; }
-      header p { font-size: 16px; }
-      .arrow {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-      }
-      .arrow.prev {
-        left: 8px;
-      }
-      .arrow.next {
-        right: 8px;
-      }
-      .indicators {
-        bottom: 10px;
-      }
-      .indicator {
-        width: 10px;
-        height: 10px;
-      }
-      .flower {
-        width: 35px;
-        height: 35px;
-      }
-      .counter-container {
-        flex-wrap: wrap;
-      }
-      .time-unit {
-        min-width: 65px;
-        flex: 1;
-      }
-      .time-unit span {
-        font-size: 18px;
-      }
-    }
-
-    footer{text-align:center;padding:20px;color:var(--muted);font-size:14px}
-
-    /* modal */
-    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);z-index:99}
-    .modal.open{display:flex}
-    .modal img{max-width:90%;max-height:90%;border-radius:10px}
-
-    /* easter egg */
-    #alan{display:none;position:fixed;bottom:20px;left:20px;background:#222;color:#fff;padding:10px 14px;border-radius:10px;font-size:14px;font-family:monospace}
-  </style>
+  @keyframes float{
+    0%{transform:translateY(-10%) rotate(0deg);}
+    100%{transform:translateY(120vh) rotate(360deg);}
+  }
+</style>
 </head>
 <body>
-  <header>
-    <h1>🌻 1 Mês de Amor 🌹</h1>
-    <p>Como num capítulo de <em>Life is Strange</em>, cada escolha, cada sorriso, nos trouxe até aqui.</p>
 
-  </header>
-   <!-- flores animadas PERSONALIZADAS -->
-    <!-- Substitua "midia/girassol.png" e "midia/rosa.png" pelos caminhos das suas imagens -->
-    <img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:5%;animation-delay:0s">
-    <img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:15%;animation-delay:2s">
-    <img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:25%;animation-delay:4s">
-    <img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:35%;animation-delay:1s">
-    <img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:45%;animation-delay:3s">
-    <img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:55%;animation-delay:5s">
-    <img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:65%;animation-delay:2.5s">
-    <img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:75%;animation-delay:0.5s">
-    <img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:85%;animation-delay:3.5s">
-    <img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:95%;animation-delay:1.5s">
 
-  <div class="container">
-    <!-- Slideshow de fotos -->
-    <div class="card slideshow">
-      <div class="slides" id="slides">
-        <div class="slide" style="background-image:url('midia/Imagem do WhatsApp de 2025-09-16 à(s) 19.51.19_9c9a5dbf.jpg')"></div>
-        <div class="slide" style="background-image:url('midia/IMG_20250916_183431.jpg')"></div>
-        <div class="slide" style="background-image:url('midia/IMG_20250916_183411.jpg')"></div>
-        <div class="slide" style="background-image:url('midia/IMG_20250916_183016.jpg')"></div>
-        <div class="slide" style="background-image:url('midia/IMG_20250916_182420.jpg')"></div>
-        <div class="slide" style="background-image:url('midia/IMG_20250916_183042.jpg')"></div>
-        <div class="slide" style="background-image:url('midia/IMG_20250916_183226.jpg')"></div>
-        <div class="slide" style="background-image:url('midia/IMG_20250916_184250.jpg')"></div>
-        <!-- Adicione mais slides conforme necessário -->
-      </div>
-      
-      <!-- Setas laterais -->
-      <button class="arrow prev" id="prev">❮</button>
-      <button class="arrow next" id="next">❯</button>
-      
-      <!-- Indicadores (bolinhas) -->
-      <div class="indicators" id="indicators">
-        <!-- As bolinhas serão geradas pelo JavaScript -->
-      </div>
-    </div>
 
-    <div class="card message">
-      <!-- Contador de tempo juntos -->
-      <div class="love-counter">
-        <h3>📅 Unidas durante</h3>
-        <div class="counter-container">
-          <div class="time-unit">
-            <span id="days">0</span>
-            <small>Dias</small>
-          </div>
-          <div class="time-unit">
-            <span id="hours">0</span>
-            <small>Horas</small>
-          </div>
-          <div class="time-unit">
-            <span id="minutes">0</span>
-            <small>Minutos</small>
-          </div>
-          <div class="time-unit">
-            <span id="seconds">0</span>
-            <small>Segundos</small>
-          </div>
-        </div>
-      </div>
-      
-      <p>🌻 Você é meu girassol, que sempre encontra a luz.<br>
-      🌹 Você é minha rosa, delicada e única.<br>
-      Cada momento com você é como viver uma cena inesquecível de um jogo que eu nunca quero terminar.</p>
-    </div>
+<header>
+  <!-- flores animadas PERSONALIZADAS -->
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:5%;animation-delay:0s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:15%;animation-delay:2s">
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:25%;animation-delay:4s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:35%;animation-delay:1s">
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:45%;animation-delay:3s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:55%;animation-delay:5s">
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:65%;animation-delay:2.5s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:75%;animation-delay:0.5s">
+<img src="midia/Flor_Girassol_PNG_Transparente_Sem_Fundo.png" class="flower" style="left:85%;animation-delay:3.5s">
+<img src="midia/—Pngtree—single pink rose with leaves_14500743.png" class="flower" style="left:95%;animation-delay:1.5s">
+  <h1>🌻 Puzzle do Alanzoka 🌹</h1>
+  <p>Resolva para entrar no nosso cantinho 💖</p>
+</header>
 
-    <div class="card">
-      <h3>Galeria 💕</h3>
-      <div class="gallery" id="gallery">
-        <!-- Vídeos -->
-        <video controls>
-          <source src="midia/Vídeo do WhatsApp de 2025-09-16 à(s) 19.25.22_e6762869.mp4" type="video/mp4">
-          Seu navegador não suporta vídeos.
-        </video>
-        <video controls>
-          <source src="midia/Vídeo do WhatsApp de 2025-09-16 à(s) 19.27.04_e3b2750a.mp4" type="video/mp4">
-          Seu navegador não suporta vídeos.
-        </video>
-        <video controls>
-          <source src="midia/Vídeo do WhatsApp de 2025-09-16 à(s) 19.45.57_fe2745b2.mp4" type="video/mp4">
-          Seu navegador não suporta vídeos.
-        </video>
-      </div>
-    </div>
+<div class="container">
+  <div class="card">
+    <h2>Escreva a frase corretamente 🎮</h2>
+    <p><em>"meu joelho da coçando"</em></p>
+    <input type="text" id="answer" placeholder="Digite a frase certa">
+    <button onclick="checkAnswer()">Verificar</button>
+    <div class="error" id="error">❌ Resposta incorreta, tente de novo!</div>
   </div>
+</div>
 
-  <footer>
-    Feito com carinho, unidas por 🌻🌹 Life is Strange & Alanzoka 🎮
-  </footer>
-
-  <div class="modal" id="modal"><img src="" alt="foto"></div>
-  <div id="alan">EITA! Você achou o easter egg do Alanzoka 🎮</div>
-
-  <script>
-    // Contador de tempo juntos
-    function updateLoveCounter() {
-      const startDate = new Date('2025-08-17T00:00:00'); // Data que começaram a namorar
-      const now = new Date();
-      
-      const diff = now - startDate; // Diferença em milissegundos
-      
-      // Calculando dias, horas, minutos e segundos
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      
-      // Atualizando os elementos
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+<script>
+  function checkAnswer(){
+    const resposta = document.getElementById('answer').value.trim().toLowerCase();
+    const correta = "meus cocelho ta joando";
+    if(resposta === correta){
+      window.location.href = "love.html";
+    }else{
+      document.getElementById('error').style.display = "block";
     }
-    
-    // Atualizar a cada segundo
-    setInterval(updateLoveCounter, 1000);
-    updateLoveCounter(); // Inicializar imediatamente
-
-    // slideshow de fotos
-    const slidesEl = document.getElementById('slides');
-    const slides = Array.from(slidesEl.children);
-    const indicatorsContainer = document.getElementById('indicators');
-    let idx = 0;
-    
-    // Criar indicadores (bolinhas)
-    slides.forEach((_, index) => {
-      const indicator = document.createElement('button');
-      indicator.classList.add('indicator');
-      if (index === 0) indicator.classList.add('active');
-      indicator.addEventListener('click', () => {
-        idx = index;
-        update();
-      });
-      indicatorsContainer.appendChild(indicator);
-    });
-    
-    const indicators = Array.from(indicatorsContainer.children);
-    
-    function update() {
-      slidesEl.style.transform = `translateX(-${idx * 100}%)`;
-      
-      // Atualizar indicadores
-      indicators.forEach((indicator, index) => {
-        if (index === idx) {
-          indicator.classList.add('active');
-        } else {
-          indicator.classList.remove('active');
-        }
-      });
-    }
-    
-    document.getElementById('prev').onclick = () => {
-      idx = (idx - 1 + slides.length) % slides.length;
-      update();
-    };
-    
-    document.getElementById('next').onclick = () => {
-      idx = (idx + 1) % slides.length;
-      update();
-    };
-    
-    // Iniciar slideshow automático
-    /*let slideInterval = setInterval(() => {
-      idx = (idx + 1) % slides.length;
-      update();
-    }, 10000);
-    
-    // Pausar slideshow quando o usuário interagir
-    slidesEl.addEventListener('mouseenter', () => clearInterval(slideInterval));
-    slidesEl.addEventListener('mouseleave', () => {
-      slideInterval = setInterval(() => {
-        idx = (idx + 1) % slides.length;
-        update();
-      }, 6000);
-    });*/
-
-    // modal (só abre para imagens da galeria se quiser adicionar depois)
-    const modal = document.getElementById('modal');
-    const modalImg = modal.querySelector('img');
-    document.getElementById('gallery').addEventListener('click', e => {
-      if(e.target.tagName === 'IMG'){
-        modalImg.src = e.target.src;
-        modal.classList.add('open');
-      }
-    });
-    modal.onclick = () => modal.classList.remove('open');
-
-    // easter egg: clicar 5x na galeria
-    let clicks = 0;
-    document.getElementById('gallery').addEventListener('click', () => {
-      clicks++;
-      if(clicks === 5) {
-        document.getElementById('alan').style.display = 'block';
-        setTimeout(() => {
-          document.getElementById('alan').style.display = 'none';
-        }, 3000);
-      }
-    });
-  </script>
+  }
+</script>
 </body>
 </html>
-
