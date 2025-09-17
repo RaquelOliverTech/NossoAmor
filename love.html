@@ -19,7 +19,36 @@
       color:var(--text);
       overflow-x:hidden;
     }
-
+    
+    /* Controle de áudio personalizado */
+    .audio-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px;
+      border-radius: 50px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .audio-control button {
+      background: var(--accent);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    
     header{
       text-align:center;
       padding:30px 20px;
@@ -278,6 +307,17 @@
   </style>
 </head>
 <body>
+  <!-- Áudio de fundo com controles -->
+  <audio id="backgroundMusic" loop>
+    <source src="midia/Áudio do WhatsApp de 2025-09-16 à(s) 21.40.32_03f6871a.mp3" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
+  
+  <!-- Controle personalizado de áudio -->
+  <div class="audio-control">
+    <button id="toggleMusic">🔊</button>
+  </div>
+
   <header>
     <h1>🌻 1 Mês de Amor 🌹</h1>
     <p>Como num capítulo de <em>Life is Strange</em>, cada escolha, cada sorriso, nos trouxe até aqui.</p>
@@ -481,6 +521,44 @@
           document.getElementById('alan').style.display = 'none';
         }, 3000);
       }
+    });
+     
+    // Controle de áudio
+    const music = document.getElementById('backgroundMusic');
+    const toggleButton = document.getElementById('toggleMusic');
+    let isPlaying = false;
+
+    // Tentar reproduzir automaticamente (com tratamento de erro)
+    music.volume = 0.7; // Volume em 70%
+    
+    const playMusic = () => {
+      music.play().then(() => {
+        isPlaying = true;
+        toggleButton.textContent = '🔊';
+      }).catch(error => {
+        console.log('Reprodução automática bloqueada:', error);
+        toggleButton.textContent = '🔈';
+      });
+    };
+
+    // Tentar tocar quando o usuário interagir com a página
+    document.addEventListener('click', function initialPlay() {
+      if (!isPlaying) {
+        playMusic();
+      }
+      document.removeEventListener('click', initialPlay);
+    });
+
+    // Controle de ligar/desligar áudio
+    toggleButton.addEventListener('click', () => {
+      if (isPlaying) {
+        music.pause();
+        toggleButton.textContent = '🔈';
+      } else {
+        music.play();
+        toggleButton.textContent = '🔊';
+      }
+      isPlaying = !isPlaying;
     });
   </script>
 </body>
